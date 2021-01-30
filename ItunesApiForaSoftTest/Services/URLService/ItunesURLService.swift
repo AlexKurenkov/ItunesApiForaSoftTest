@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - Application URLService attached by application needs
 protocol ItunesURLServiceProtocol {
+    
     init(urlService: URLServiceProtocol)
     
     func albumUrl(fromName name: String?) -> URL?
@@ -25,6 +26,7 @@ class ItunesURLService: ItunesURLServiceProtocol {
     
     private var mainURL = "https://itunes.apple.com/search"
     
+    // construct url for download albums information
     func albumUrl(fromName name: String?) -> URL? {
         let term      = URLQueryItem(name: "term", value: name)
         let entity    = URLQueryItem(name: "entity", value: "album")
@@ -33,6 +35,7 @@ class ItunesURLService: ItunesURLServiceProtocol {
         return urlService.fetchUrlWithComponents(from: mainURL, components: items)
     }
     
+    // construct url for download tracks information
     func trackUrl(fromName name: String?) -> URL? {
         let term        = URLQueryItem(name: "term", value: name)
         let entity      = URLQueryItem(name: "entity", value: "song")
@@ -40,6 +43,4 @@ class ItunesURLService: ItunesURLServiceProtocol {
         let items: [URLQueryItem] = [term,entity,attribute]
         return urlService.fetchUrlWithComponents(from: mainURL, components: items)
     }
-    
-    
 }

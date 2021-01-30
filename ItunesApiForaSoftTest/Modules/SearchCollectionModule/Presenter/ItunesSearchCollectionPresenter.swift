@@ -13,18 +13,20 @@ protocol ItunesSearchCollectionViewProtocol: class {
 }
 
 protocol ItunesSearchCollectionPresenterProtocol: class {
-    // getAlbums from network
-    func getAlbums(fromName name: String)
+    
+    init(view: ItunesSearchCollectionViewProtocol?,
+         dataManager: HistoryDataManagerProtocol?,
+         router: ItunesRouterProtocol?,
+         networkDataFetcher: ItunesNetworkDataFetcherProtocol?)
+    
+    var albums: [Album]? { get set }
+    
     // show detail view
     func didSelectAlbum(album: Album?)
     // save searched text
     func saveSearchTextToHistory(text: String)
-    // search album 
+    // search album from network
     func searchAlbum(with searchText: String)
-    
-    var albums: [Album]? { get set }
-    
-    init(view: ItunesSearchCollectionViewProtocol?, dataManager: HistoryDataManagerProtocol?, router: ItunesRouterProtocol?, networkDataFetcher: ItunesNetworkDataFetcherProtocol?)
 }
 
 class ItunesSearchCollectionPresenter: ItunesSearchCollectionPresenterProtocol {
@@ -49,8 +51,9 @@ class ItunesSearchCollectionPresenter: ItunesSearchCollectionPresenterProtocol {
         self.networkDataFetcher = networkDataFetcher
     }
     
-    // MARK: - Methods
-    func getAlbums(fromName name: String) {
+    // MARK: - Private Methods
+    // private network methods for fetch albums information
+    private func getAlbums(fromName name: String) {
         networkDataFetcher?.fetchAlbums(fromName: name, completion: { [weak self] (result) in
             switch result {
             case .success(let albums):
@@ -62,6 +65,8 @@ class ItunesSearchCollectionPresenter: ItunesSearchCollectionPresenterProtocol {
         })
     }
     
+    // MARK: - Methods
+    // work with UI before searching and after searching
     func searchAlbum(with searchText: String) {
         guard let view = self.view as? ItunesSearchCollectionViewController else { return }
         view.notFoundLabel?.isHidden = true
@@ -79,15 +84,15 @@ class ItunesSearchCollectionPresenter: ItunesSearchCollectionPresenterProtocol {
         }
     }
     
+    // show detailVC after select collectionViewCell (Album)
     func didSelectAlbum(album: Album?) {
         router?.showDetailViewController(album: album)
     }
     
+    // save searched text from search bar to UserDefaults
     func saveSearchTextToHistory(text: String) {
         dataManager?.addTextToHistory(text: text)
     }
-    
-    
 }
 
 

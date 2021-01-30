@@ -61,5 +61,4 @@ class DetailTableViewCell: UITableViewCell {
         trackNameLabel.text = track?.trackName
         artistNameLabel.text = track?.artistName
     }
-
 }

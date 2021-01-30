@@ -14,8 +14,8 @@ class ItunesSearchCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlet
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
+    @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView! {
         didSet {
             if #available(iOS 13.0, *) {
@@ -57,9 +57,8 @@ class ItunesSearchCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
     public func setupItunesSearchCollectionViewCell(by album: Album?) {
         imageURL = album?.artworkUrl100
-        albumNameLabel.text = album?.collectionName
         artistNameLabel.text = album?.artistName
+        albumNameLabel.text = album?.collectionName
     }
-  
 }
 

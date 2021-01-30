@@ -23,14 +23,14 @@
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="khg-nj-Tgv">
                         <rect key="frame" x="100.5" y="138.5" width="20" height="20"/>
                     </activityIndicatorView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ArtistName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2n-oy-zFg">
-                        <rect key="frame" x="5" y="263" width="211" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AlbumName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2n-oy-zFg">
+                        <rect key="frame" x="5" y="263" width="211" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AlbumName" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlx-Vr-9Uf">
-                        <rect key="frame" x="5" y="296.5" width="211" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ArtistName" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlx-Vr-9Uf">
+                        <rect key="frame" x="5" y="297" width="211" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -55,8 +55,8 @@
             </constraints>
             <size key="customSize" width="221" height="352"/>
             <connections>
-                <outlet property="albumNameLabel" destination="dlx-Vr-9Uf" id="WKa-Fb-a4p"/>
-                <outlet property="artistNameLabel" destination="G2n-oy-zFg" id="QNf-eu-PWM"/>
+                <outlet property="albumNameLabel" destination="G2n-oy-zFg" id="QNf-eu-PWM"/>
+                <outlet property="artistNameLabel" destination="dlx-Vr-9Uf" id="NLh-ZJ-NBC"/>
                 <outlet property="imageView" destination="dfy-hr-nE1" id="p6G-Oc-vO1"/>
                 <outlet property="indicator" destination="khg-nj-Tgv" id="C86-Oh-NkP"/>
             </connections>

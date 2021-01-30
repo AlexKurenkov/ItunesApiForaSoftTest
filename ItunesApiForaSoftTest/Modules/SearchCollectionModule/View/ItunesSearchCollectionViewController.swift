@@ -40,13 +40,14 @@ class ItunesSearchCollectionViewController: UIViewController {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "standartCell")
     }
     
+    // check searched text in searchBar and reload data in collection view
     private func getAlbums() {
         guard
             let view = self.tabBarController as? TabBarViewController,
             let text = view.navigationItem.searchController?.searchBar.text
         else { return }
         if !text.isEmpty {
-            presenter?.getAlbums(fromName: text)
+            presenter?.searchAlbum(with: text)
         }
     }
     
@@ -77,11 +78,9 @@ extension ItunesSearchCollectionViewController: UICollectionViewDelegateFlowLayo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         CGFloat.zero
-        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         CGFloat.zero
-        
     }
     
 }
@@ -102,6 +101,7 @@ extension ItunesSearchCollectionViewController: UICollectionViewDataSource {
 // MARK: - UIScrollViewDelegate
 extension ItunesSearchCollectionViewController {
     
+    // dissmiss keyboard when scroling
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let tabBarVC = self.tabBarController as? TabBarViewController,
               let searchBar = tabBarVC.navigationItem.searchController?.searchBar
@@ -121,15 +121,16 @@ extension ItunesSearchCollectionViewController: ItunesSearchCollectionViewProtoc
     }
     
     func failure(error: Error) {
-        
+        // show alert if networkResponse have errors
         let alertController = UIAlertController.applicationErrorAlert(controllerTitle: "Something's go wrong",
                                                                       cotrollerMessage: error.localizedDescription,
                                                                       actionTitle: "reload",
                                                                       cancelActionTitle: "cancel",
                                                                       actionHandler:  { [weak self] (action) in
-                                                                        guard let self = self else { return }
-                                                                        self.presenter?.getAlbums(fromName: "")
-                                                                      })
+                                                                        self?.presenter?.searchAlbum(with: "")
+                                                                      }, cancelHandler: { [weak self] _ in
+                                                                        self?.indicator.stopAnimating()
+                                                                    })
         self.present(alertController, animated: true, completion: nil)
     }
     

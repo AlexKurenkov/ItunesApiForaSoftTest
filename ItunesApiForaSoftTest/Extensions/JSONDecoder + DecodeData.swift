@@ -9,6 +9,7 @@ import Foundation
 
 //MARK: - Decode data from response with special errors. Needs for decode data and bugfixing
 extension JSONDecoder {
+    
     static func getDecodedData<T: Decodable>(type: T.Type, from data: Data?) -> T? {
         let decoder = JSONDecoder()
         guard let data = data else { return nil }

@@ -8,6 +8,7 @@
 import Foundation
 
 extension UserDefaults {
+    
     public enum DefaultKeys {
         static let history = "history"
     }

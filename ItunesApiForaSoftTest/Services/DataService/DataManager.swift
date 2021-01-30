@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - Data Manager for working with UserDefaults
 protocol DataManagerProtocol {
+    
     func getData<T>(forKey key: String) -> T?
     func setData(data: Any, forKey key: String)
     func deleteData(forKey: String)

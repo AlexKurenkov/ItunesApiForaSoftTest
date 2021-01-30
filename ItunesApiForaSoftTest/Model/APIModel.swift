@@ -10,12 +10,13 @@ import Foundation
 // MARK: - Itunes Api Model. https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 
 // MARK: - Album
-
 struct Albums: Decodable {
+    
     let results: [Album]
 }
 
 struct Album: Decodable {
+    
     let artistId: Int
     let collectionId: Int
     let artistName: String
@@ -28,13 +29,14 @@ struct Album: Decodable {
 
 
 // MARK: - Track
-
 struct Tracks: Decodable {
+    
     let resultCount: Int
     let results: [Track]
 }
 
 struct Track: Decodable {
+    
     let collectionId: Int
     let artistName: String
     let trackName: String

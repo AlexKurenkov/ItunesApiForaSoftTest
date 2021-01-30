@@ -29,16 +29,19 @@ struct ItunesNetworkDataFetcher: ItunesNetworkDataFetcherProtocol {
         self.urlService = urlService
     }
     
+    // fetch albums information from network decoded by JSONDecoder
     func fetchAlbums(fromName name: String?, completion: @escaping (Result<Albums?, Error>) -> ()) {
         guard let url = urlService.albumUrl(fromName: name) else { return }
         networkDataFetcher.fetchDecodedData(from: url, completion: completion)
     }
     
+    // fetch tracks information from network decoded by JSONDecoder
     func fetchTracks(fromName name: String?, completion: @escaping (Result<Tracks?, Error>)->()) {
         guard let url = urlService.trackUrl(fromName: name) else { return }
         networkDataFetcher.fetchDecodedData(from: url, completion: completion)
     }
     
+    // fetch image from network with URL
     func fetchImage(from url: URL?, completion: @escaping (Result<UIImage?,Error>) -> ()) {
         guard let url = url else { return }
         networkDataFetcher.fetchData(from: url) { (result) in
@@ -52,6 +55,7 @@ struct ItunesNetworkDataFetcher: ItunesNetworkDataFetcherProtocol {
         }
     }
     
+    // fetch image from network with String
     func fetchImage(from url: String?, completion: @escaping (Result<UIImage?,Error>) -> ()) {
         guard let url = url else { return }
         networkDataFetcher.fetchData(from: url) { (result) in
@@ -64,8 +68,4 @@ struct ItunesNetworkDataFetcher: ItunesNetworkDataFetcherProtocol {
             }
         }
     }
-    
-
-    
-    
 }

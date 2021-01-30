@@ -53,7 +53,6 @@ class DetailViewController: UIViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.title = presenter?.album?.artistName
     }
     
     private func setupGestures() {
@@ -98,8 +97,6 @@ extension DetailViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 // MARK: -DetailViewProtocol
@@ -116,8 +113,6 @@ extension DetailViewController: DetailViewProtocol {
         trackCountLabel.text = "Tracks: \(album?.trackCount ?? 0) "
         releaseDateLabel.text = album?.releaseDate.formatted()
         genreLabel.text = "Genre: \(album?.primaryGenreName ?? "")"
-        
-        navigationItem.title = album?.collectionName.capitalized
     }
     
     func setTracks(tracks: [Track]?) {
@@ -142,6 +137,5 @@ extension DetailViewController: DetailViewProtocol {
                                                                         self.presenter?.getTracks()
                                                                       })
         self.present(alertController, animated: true, completion: nil)
-        
     }
 }

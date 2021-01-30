@@ -8,20 +8,25 @@
 import UIKit
 
 protocol RouterMainProtocol {
+    
+    init(navigationController: UINavigationController?, assemblyBuilder: AssemblyBuilderProtocol?)
+    
     var navigationController: UINavigationController? { get set }
     var assemblyBuilder: AssemblyBuilderProtocol? { get set }
-    init(navigationController: UINavigationController?, assemblyBuilder: AssemblyBuilderProtocol?)
 }
 
 // MARK: - ItunesRouterProtocol - the abstract protocol required for routing in Application
 protocol ItunesRouterProtocol: RouterMainProtocol {
+    
+    init(navigationController: UINavigationController?, assemblyBuilder: AssemblyBuilderProtocol?)
+    
     func showInitialViewController()
     func showDetailViewController(album: Album?)
-    init(navigationController: UINavigationController?, assemblyBuilder: AssemblyBuilderProtocol?)
     func popToRoot()
 }
 
 struct ItunesRouter: ItunesRouterProtocol {
+    
     var assemblyBuilder: AssemblyBuilderProtocol?
     var navigationController: UINavigationController?
     
@@ -46,8 +51,7 @@ struct ItunesRouter: ItunesRouterProtocol {
 
     func popToRoot() {
         if let navigationController = navigationController {
-            guard let vc = navigationController.viewControllers.first else { return }
-            navigationController.popToViewController(vc, animated: true)
+            navigationController.popToRootViewController(animated: true)
         }
     }
 }

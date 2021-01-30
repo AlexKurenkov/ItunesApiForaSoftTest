@@ -18,5 +18,4 @@ extension UIImage {
     public convenience init?(_ image: ApplicationImages) {
         self.init(named: image.rawValue)
     }
-
 }

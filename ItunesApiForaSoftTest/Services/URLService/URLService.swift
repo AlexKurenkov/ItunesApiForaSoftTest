@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - URL Service. creates url from queryItems
 protocol URLServiceProtocol {
+    
     func fetchUrlWithComponents(from url: String, components: [URLQueryItem]) -> URL?
 }
 

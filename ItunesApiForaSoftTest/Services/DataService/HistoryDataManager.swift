@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - Application DataManager attached by application needs
 protocol HistoryDataManagerProtocol {
+    
     init(dataManager: DataManagerProtocol)
     func addTextToHistory(text: String)
     func getHistory() -> [String]

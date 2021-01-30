@@ -33,7 +33,6 @@ class HistoryTableViewController: UIViewController {
 
     // MARK: - Public Properties
     var presenter: HistoryTableViewPresenterProtocol?
-
 }
 
 //MARK: - UITableViewDelegate
@@ -63,6 +62,7 @@ extension HistoryTableViewController: UITableViewDataSource {
 // MARK: -  UIScrollViewDelegate
 extension HistoryTableViewController {
     
+    // dismiss keyboard when srolling
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let tabBarVC = self.tabBarController as? TabBarViewController,
               let searchBar = tabBarVC.navigationItem.searchController?.searchBar

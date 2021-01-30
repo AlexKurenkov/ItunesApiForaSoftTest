@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - StandartAlert
 extension UIAlertController {
+    
     static func applicationErrorAlert(controllerTitle cTitle: String?,
                                       cotrollerMessage message: String?,
                                       actionTitle aTitle: String?,

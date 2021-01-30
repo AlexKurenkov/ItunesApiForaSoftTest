@@ -9,6 +9,9 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    // MARK: Private flag for setup nav bar correctly
+    private var isNavigationBarSetuped: Bool = false
+    
     // MARK: - UIViewControllerLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,20 +20,13 @@ class TabBarViewController: UITabBarController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setAlbumNavigationBar()
         super.viewWillAppear(animated)
+        if !isNavigationBarSetuped {
+            // first setup for navBar
+            setAlbumNavigationBar()
+            isNavigationBarSetuped = true
+        }
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        searchController.isEditing = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchController.isEditing = false
-    }
-
 
     // MARK: - Visual Components
     public var searchController = UISearchController(searchResultsController: nil)
@@ -49,17 +45,18 @@ class TabBarViewController: UITabBarController {
                                     searchBarTag tag: Int,
                                     title: String,
                                     rightBarButton: UIBarButtonItem?) {
-        navigationController?.navigationBar.prefersLargeTitles = true
         if #available(iOS 12.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
         }
-        navigationItem.largeTitleDisplayMode = .automatic
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         searchController.searchBar.placeholder = text
         searchController.searchBar.tag = tag
         navigationItem.title = title
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
+    // setup navigation bar with albums atributes
     private func setAlbumNavigationBar() {
         setupNavigationBar(searchPlaceholderText: "Enter Artist name",
                            searchBarTag: Tags.searchVCSearchBarTag,
@@ -67,6 +64,7 @@ class TabBarViewController: UITabBarController {
                            rightBarButton: nil)
     }
     
+    // setup navigation bar with history atributes
     private func setHistoryNavigationBar() {
         let barButton = UIBarButtonItem(title: "Clear History", style: .plain, target: self, action: #selector(rightBarButtonItemAction(_:)))
         setupNavigationBar(searchPlaceholderText: "Search from history",
@@ -76,22 +74,20 @@ class TabBarViewController: UITabBarController {
     }
     
     private func searchAlbum(from searchText: String) {
-        guard let view = self.selectedViewController as? ItunesSearchCollectionViewController else { return }
+        guard let view = selectedViewController as? ItunesSearchCollectionViewController else { return }
         view.presenter?.searchAlbum(with: searchText)
-        
     }
     
     private func searchHistory(from searchText: String) {
-        guard let view = self.selectedViewController as? HistoryTableViewController else { return }
+        guard let view = selectedViewController as? HistoryTableViewController else { return }
         view.presenter?.searchInHistory(searchText: searchText)
     }
     
     // MARK: - Actions
     @objc func rightBarButtonItemAction(_ sender: UIBarButtonItem) {
-        guard let view = tabBarController?.selectedViewController as? HistoryTableViewController else { return }
+        guard let view = selectedViewController as? HistoryTableViewController else { return }
         view.presenter?.clearHistory()
     }
-
 }
 
 //MARK: -UITabBarControllerDelegate
@@ -108,6 +104,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
 // MARK: -UISearchBarDelegate
 extension TabBarViewController: UISearchBarDelegate {
     
+    // choose searchBar action depending choosen tab on tabBar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         switch searchBar.tag {
         case Tags.searchVCSearchBarTag:
@@ -122,6 +119,7 @@ extension TabBarViewController: UISearchBarDelegate {
 // MARK: -UISearchControllerDelegate
 extension TabBarViewController: UISearchControllerDelegate {
     
+    // nulify album or history VC by cancel tap on searchController
     func willDismissSearchController(_ searchController: UISearchController) {
         switch searchController.searchBar.tag {
         case Tags.searchVCSearchBarTag:
@@ -130,9 +128,7 @@ extension TabBarViewController: UISearchControllerDelegate {
             searchHistory(from: "")
         default:break
         }
-        
     }
-
 }
 
 

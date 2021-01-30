@@ -7,6 +7,7 @@
 import UIKit
 
 protocol AssemblyBuilderProtocol {
+    
     func createMainTabBarController(router: ItunesRouterProtocol) -> UITabBarController
     func createDetailViewController(router: ItunesRouterProtocol, album: Album?) -> UIViewController
     func createSearchCollectionViewController(router: ItunesRouterProtocol) -> UIViewController

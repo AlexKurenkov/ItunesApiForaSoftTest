@@ -9,11 +9,13 @@ import UIKit
 
 // MARK: - Base Network Service. Create and send requests
 protocol NetworkServiceProtocol {
+    
     func request(from url: String, completion: @escaping (Result<Data?,Error>) -> ())
     func request(from url: URL, completion: @escaping (Result<Data?,Error>) -> ())
 }
 
 struct NetworkService: NetworkServiceProtocol {
+    
     func request(from url: String, completion: @escaping (Result<Data?,Error>) -> ()) {
         guard let url = URL(string: url) else { return }
         let task = createDataTask(from: url, completion: completion)

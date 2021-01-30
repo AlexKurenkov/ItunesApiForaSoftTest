@@ -9,10 +9,14 @@
 import Foundation
 
 protocol HistoryTableViewProtocol: class {
+    
     func setHistory(history: [String]?)
 }
 
 protocol HistoryTableViewPresenterProtocol: class {
+    
+    init(view: HistoryTableViewProtocol?, dataManager: HistoryDataManagerProtocol?, router: ItunesRouterProtocol?, networkDataFetcher: ItunesNetworkDataFetcherProtocol?)
+    
     var history: [String]? { get set }
     
     // get history from UserDefaults
@@ -21,12 +25,12 @@ protocol HistoryTableViewPresenterProtocol: class {
     func selectTableCell(text: String?)
     // search from history table
     func searchInHistory(searchText: String)
+    // clear search history
     func clearHistory()
-    
-    init(view: HistoryTableViewProtocol?, dataManager: HistoryDataManagerProtocol?, router: ItunesRouterProtocol?, networkDataFetcher: ItunesNetworkDataFetcherProtocol?)
 }
 
 class HistoryTableViewPresenter: HistoryTableViewPresenterProtocol {
+    
     // MARK: - Properties
     weak var view: HistoryTableViewProtocol?
     var router: ItunesRouterProtocol?
@@ -73,20 +77,17 @@ class HistoryTableViewPresenter: HistoryTableViewPresenterProtocol {
         view?.setHistory(history: history)
     }
     
+    // open SearchCollectionViewController after select some search history cell
     func selectTableCell(text: String?) {
         guard let view = self.view as? HistoryTableViewController else { return }
         guard let tabBarVC = view.tabBarController as? TabBarViewController,
               let searchController = tabBarVC.navigationItem.searchController
               else { return }
         searchController.searchBar.text = text
-        searchController.isActive = true
+        //searchController.isActive = true
         guard let searchView = tabBarVC.viewControllers?[0] else { return }
         tabBarVC.selectedViewController = searchView
         tabBarVC.delegate?.tabBarController?(tabBarVC, didSelect: searchView)
         
     }
-    
-    
-    
-    
 }
