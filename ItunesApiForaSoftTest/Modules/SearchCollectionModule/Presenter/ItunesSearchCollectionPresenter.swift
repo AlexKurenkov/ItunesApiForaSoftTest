@@ -27,6 +27,8 @@ protocol ItunesSearchCollectionPresenterProtocol: class {
     func saveSearchTextToHistory(text: String)
     // search album from network
     func searchAlbum(with searchText: String)
+    // show search collection VC with search text from history
+    func didSelectHistoryTableCell(with text: String?)
 }
 
 class ItunesSearchCollectionPresenter: ItunesSearchCollectionPresenterProtocol {
@@ -92,6 +94,17 @@ class ItunesSearchCollectionPresenter: ItunesSearchCollectionPresenterProtocol {
     // save searched text from search bar to UserDefaults
     func saveSearchTextToHistory(text: String) {
         dataManager?.addTextToHistory(text: text)
+    }
+    
+    // open SearchCollectionViewController after select some search history cell
+    func didSelectHistoryTableCell(with text: String?) {
+        guard let view = self.view as? ItunesSearchCollectionViewController else { return }
+        guard let tabBarVC = view.tabBarController as? TabBarViewController,
+              let searchController = tabBarVC.navigationItem.searchController
+              else { return }
+        searchController.searchBar.text = text
+        tabBarVC.selectedViewController = view
+        tabBarVC.delegate?.tabBarController?(tabBarVC, didSelect: view)
     }
 }
 

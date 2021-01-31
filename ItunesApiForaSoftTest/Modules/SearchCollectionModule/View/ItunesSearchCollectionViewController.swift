@@ -110,6 +110,13 @@ extension ItunesSearchCollectionViewController {
     }
 }
 
+// MARK: -HistoryTableViewControllerDelegate
+extension ItunesSearchCollectionViewController: HistoryTableViewControllerDelegate {
+    func didSelectTabelCell(with text: String?) {
+        presenter?.didSelectHistoryTableCell(with: text)
+    }
+}
+
 // MARK: -ItunesSearchCollectionViewProtocol
 extension ItunesSearchCollectionViewController: ItunesSearchCollectionViewProtocol {
     

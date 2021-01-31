@@ -113,6 +113,7 @@ extension DetailViewController: DetailViewProtocol {
         trackCountLabel.text = "Tracks: \(album?.trackCount ?? 0) "
         releaseDateLabel.text = album?.releaseDate.formatted()
         genreLabel.text = "Genre: \(album?.primaryGenreName ?? "")"
+        navigationItem.title = album?.collectionName
     }
     
     func setTracks(tracks: [Track]?) {

@@ -9,9 +9,9 @@ import UIKit
 protocol AssemblyBuilderProtocol {
     
     func createMainTabBarController(router: ItunesRouterProtocol) -> UITabBarController
-    func createDetailViewController(router: ItunesRouterProtocol, album: Album?) -> UIViewController
-    func createSearchCollectionViewController(router: ItunesRouterProtocol) -> UIViewController
-    func createHistoryTableViewController(router: ItunesRouterProtocol) -> UIViewController
+    func createDetailViewController(router: ItunesRouterProtocol, album: Album?) -> DetailViewController
+    func createSearchCollectionViewController(router: ItunesRouterProtocol) -> ItunesSearchCollectionViewController
+    func createHistoryTableViewController(router: ItunesRouterProtocol) -> HistoryTableViewController
 }
 
 struct AssemblyBuilder: AssemblyBuilderProtocol {
@@ -22,6 +22,7 @@ struct AssemblyBuilder: AssemblyBuilderProtocol {
 
         let historyTVC = createHistoryTableViewController(router: router)
         historyTVC.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: Tags.historyVCTabBarItemTag)
+        historyTVC.delegate = searchCVC as? HistoryTableViewControllerDelegate
 
         let tabBarController = TabBarViewController()
         tabBarController.setViewControllers([searchCVC,historyTVC], animated: true)
@@ -29,7 +30,7 @@ struct AssemblyBuilder: AssemblyBuilderProtocol {
         return tabBarController
     }
     
-    func createDetailViewController(router: ItunesRouterProtocol, album: Album?) -> UIViewController {
+    func createDetailViewController(router: ItunesRouterProtocol, album: Album?) -> DetailViewController {
         let view = DetailViewController()
         let networkDataFetcher = ItunesNetworkDataFetcher()
         let presenter = DetailViewPresenter(view: view, album: album, router: router, networkDataFetcher: networkDataFetcher)
@@ -37,7 +38,7 @@ struct AssemblyBuilder: AssemblyBuilderProtocol {
         return view
     }
 
-    func createSearchCollectionViewController(router: ItunesRouterProtocol) -> UIViewController {
+    func createSearchCollectionViewController(router: ItunesRouterProtocol) -> ItunesSearchCollectionViewController {
         let view = ItunesSearchCollectionViewController()
         let networkDataFetcher = ItunesNetworkDataFetcher()
         let dataManager = HistoryDataManager()
@@ -49,7 +50,7 @@ struct AssemblyBuilder: AssemblyBuilderProtocol {
         return view
     }
 
-    func createHistoryTableViewController(router: ItunesRouterProtocol) -> UIViewController {
+    func createHistoryTableViewController(router: ItunesRouterProtocol) -> HistoryTableViewController {
         let view = HistoryTableViewController()
         let dataManager = HistoryDataManager()
         let networkDataFetcher = ItunesNetworkDataFetcher()

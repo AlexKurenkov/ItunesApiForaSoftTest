@@ -32,6 +32,7 @@ class HistoryTableViewController: UIViewController {
     }
 
     // MARK: - Public Properties
+    weak var delegate: HistoryTableViewControllerDelegate?
     var presenter: HistoryTableViewPresenterProtocol?
 }
 
@@ -39,7 +40,7 @@ class HistoryTableViewController: UIViewController {
 extension HistoryTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.selectTableCell(text: presenter?.history?[indexPath.row])
+        delegate?.didSelectTabelCell(with: presenter?.history?[indexPath.row])
     }
 }
 
@@ -79,5 +80,10 @@ extension HistoryTableViewController: HistoryTableViewProtocol {
     func setHistory(history: [String]?) {
         tableView.reloadData()
     }
+}
+
+// MARK: - HistoryTableViewControllerDelegate
+protocol HistoryTableViewControllerDelegate: class {
+    func didSelectTabelCell(with text: String?)
 }
 

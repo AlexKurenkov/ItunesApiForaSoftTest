@@ -21,8 +21,6 @@ protocol HistoryTableViewPresenterProtocol: class {
     
     // get history from UserDefaults
     func getHistory()
-    // show search VC with history text
-    func selectTableCell(text: String?)
     // search from history table
     func searchInHistory(searchText: String)
     // clear search history
@@ -75,19 +73,5 @@ class HistoryTableViewPresenter: HistoryTableViewPresenterProtocol {
         dataManager?.clearHistory()
         history = nil
         view?.setHistory(history: history)
-    }
-    
-    // open SearchCollectionViewController after select some search history cell
-    func selectTableCell(text: String?) {
-        guard let view = self.view as? HistoryTableViewController else { return }
-        guard let tabBarVC = view.tabBarController as? TabBarViewController,
-              let searchController = tabBarVC.navigationItem.searchController
-              else { return }
-        searchController.searchBar.text = text
-        //searchController.isActive = true
-        guard let searchView = tabBarVC.viewControllers?[0] else { return }
-        tabBarVC.selectedViewController = searchView
-        tabBarVC.delegate?.tabBarController?(tabBarVC, didSelect: searchView)
-        
     }
 }
